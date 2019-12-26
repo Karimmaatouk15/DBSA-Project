@@ -3,9 +3,9 @@ package interfaces;
 import java.io.IOException;
 
 public interface OutputStreamInterface {
-    void create(String filePath)throws IOException;
+    void create(String filePath);
 
-    void writeln()throws  IOException;
+    void writeln(Object ln);
 
-    void close() throws  IOException;
+    void close();
 }

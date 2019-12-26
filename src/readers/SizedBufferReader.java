@@ -27,7 +27,7 @@ public class SizedBufferReader implements InputStreamInterface {
     }
 
     @Override
-    public Object readln() {
+    public Object readln() { //Reads Int
         if (buffer.isEmpty()) {
             readToBuffer();
         }
@@ -75,7 +75,7 @@ public class SizedBufferReader implements InputStreamInterface {
     }
 
     @Override
-    public void close() {
+    public void close() { // see if there's need to clear the buffer
         try {
             reader.close();
         } catch (IOException e) {

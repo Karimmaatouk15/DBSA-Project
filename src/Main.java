@@ -1,4 +1,9 @@
+import Writers.CharacterWriter;
+import Writers.LineWriter;
+import Writers.MemoryMappedWriter;
+import Writers.SizedBufferWriter;
 import interfaces.InputStreamInterface;
+import interfaces.OutputStreamInterface;
 import readers.CharacterReader;
 import readers.LineReader;
 import readers.MemoryMappedReader;
@@ -9,18 +14,23 @@ public class Main {
 
     public static void main(String[] args) {
         // Test reading a file
-        InputStreamInterface reader = new MemoryMappedReader(4);
-
+        InputStreamInterface reader = new MemoryMappedReader(4096);
+        OutputStreamInterface writer = new MemoryMappedWriter(4096);
         reader.open("C:/Users/karim/Desktop/imdb/info_type.csv");
+        writer.create("C:/Users/karim/Desktop/output.csv");
         while (!reader.endOfStream()) {
-            System.out.print(reader.readln() + " ");
+            byte readValue = (byte) reader.readln();
+            System.out.print(readValue + " ");
+            writer.writeln(readValue);
         }
 
-        reader.seek(0);
-        System.out.println("\nSTREAM AGAIN");
-        while (!reader.endOfStream()) {
-            System.out.print((reader.readln()) + " ");
-        }
+        writer.close();
+
+//        reader.seek(0);
+//        System.out.println("\nSTREAM AGAIN");
+//        while (!reader.endOfStream()) {
+//            System.out.print((reader.readln()) + " ");
+//        }
         reader.close();
     }
 }

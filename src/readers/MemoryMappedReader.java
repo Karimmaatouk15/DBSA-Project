@@ -39,7 +39,8 @@ public class MemoryMappedReader implements InputStreamInterface {
         if (!mappedBuffer.hasRemaining()) {
             return -1;
         }
-        return mappedBuffer.get();
+        return mappedBuffer.get(); //returns byte
+
     }
 
     @Override
