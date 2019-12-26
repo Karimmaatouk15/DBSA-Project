@@ -1,13 +1,7 @@
-import Writers.CharacterWriter;
-import Writers.LineWriter;
-import Writers.MemoryMappedWriter;
-import Writers.SizedBufferWriter;
+import writers.MemoryMappedWriter;
 import interfaces.InputStreamInterface;
 import interfaces.OutputStreamInterface;
-import readers.CharacterReader;
-import readers.LineReader;
 import readers.MemoryMappedReader;
-import readers.SizedBufferReader;
 
 public class Main {
 

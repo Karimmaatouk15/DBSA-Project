@@ -1,4 +1,4 @@
-package Writers;
+package writers;
 
 import interfaces.OutputStreamInterface;
 
