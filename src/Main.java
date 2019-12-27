@@ -1,22 +1,31 @@
+import readers.CharacterReader;
+import readers.LineReader;
+import readers.SizedBufferReader;
+import writers.CharacterWriter;
+import writers.LineWriter;
 import writers.MemoryMappedWriter;
 import interfaces.InputStreamInterface;
 import interfaces.OutputStreamInterface;
 import readers.MemoryMappedReader;
+import writers.SizedBufferWriter;
+
+import javax.sound.sampled.Line;
 
 public class Main {
 
 
     public static void main(String[] args) {
         // Test reading a file
-        InputStreamInterface reader = new MemoryMappedReader(4096);
-        OutputStreamInterface writer = new MemoryMappedWriter(4096);
-        reader.open("C:/Users/karim/Desktop/imdb/info_type.csv");
+        InputStreamInterface reader = new SizedBufferReader(142000);
+        OutputStreamInterface writer = new SizedBufferWriter(142000);
+        reader.open("C:/Users/karim/Desktop/imdb/keyword.csv");
         writer.create("C:/Users/karim/Desktop/output.csv");
         while (!reader.endOfStream()) {
-            byte readValue = (byte) reader.readln();
-            System.out.print(readValue + " ");
-            writer.writeln(readValue);
+//            String readValue = ;
+//            System.out.print(readValue + " ");
+            writer.writeLine(reader.readLine());
         }
+
 
         writer.close();
 
@@ -27,4 +36,6 @@ public class Main {
 //        }
         reader.close();
     }
+
+
 }

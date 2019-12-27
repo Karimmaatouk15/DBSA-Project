@@ -37,7 +37,7 @@ public class MemoryMappedWriter implements OutputStreamInterface {
     }
 
     @Override
-    public void writeln(Object ln) {  //writes byte
+    public void write(Object ln) {  //writes byte
         try {
             if (mappedBuffer.capacity() == mappedBuffer.position()) {
                 mappedBuffer = channel.map(FileChannel.MapMode.READ_WRITE, bufferOffset * bufferSize, bufferSize);
@@ -47,7 +47,13 @@ public class MemoryMappedWriter implements OutputStreamInterface {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void writeLine(String line) {
+        for (char ch : line.toCharArray()) {
+            write((byte) (ch));
+        }
     }
 
     @Override

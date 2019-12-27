@@ -4,6 +4,7 @@ import interfaces.InputStreamInterface;
 
 import java.io.*;
 
+
 public class CharacterReader implements InputStreamInterface {
     private RandomAccessFile reader = null;
 
@@ -18,7 +19,7 @@ public class CharacterReader implements InputStreamInterface {
     }
 
     @Override
-    public Object readln() {
+    public Object read() {
         if (!endOfStream()) {
             try {
                 return reader.read();
@@ -27,6 +28,17 @@ public class CharacterReader implements InputStreamInterface {
             }
         }
         return -1;
+    }
+
+    @Override
+    public String readLine() {
+        String line = "";
+        int r;
+        do {
+            r = (int) read();
+            line += (char) r;
+        } while (r != LINE_FEED_BYTE);
+        return line;
     }
 
     @Override
@@ -43,7 +55,7 @@ public class CharacterReader implements InputStreamInterface {
         long oldPosition;
         try {
             oldPosition = reader.getFilePointer();
-            if (reader.read() == -1) {   // If EOF Character is read
+            if (reader.read() == EOF_INT) {   // If EOF Character is read
                 return true;
             } else {
                 this.seek(oldPosition);

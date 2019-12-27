@@ -27,7 +27,7 @@ public class SizedBufferReader implements InputStreamInterface {
     }
 
     @Override
-    public Object readln() { //Reads Int
+    public Object read() { //Reads Int
         if (buffer.isEmpty()) {
             readToBuffer();
         }
@@ -63,7 +63,7 @@ public class SizedBufferReader implements InputStreamInterface {
         long oldPosition;
         try {
             oldPosition = reader.getFilePointer();
-            if (reader.read() == -1) {   // If EOF Character is read
+            if (reader.read() == EOF_INT) {   // If EOF Character is read
                 return true;
             } else {
                 this.seek(oldPosition);
@@ -72,6 +72,18 @@ public class SizedBufferReader implements InputStreamInterface {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    @Override
+    public String readLine() {
+        String line = "";
+        int r;
+        do {
+            r = (int) read();
+            line += (char) r;
+        } while (r != LINE_FEED_BYTE);
+        return line;
     }
 
     @Override

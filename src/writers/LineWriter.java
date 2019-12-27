@@ -19,16 +19,19 @@ public class LineWriter implements OutputStreamInterface {
     }
 
     @Override
-    public void writeln(Object ln) {
+    public void write(Object ln) {
         try {
             bufferedWriter.write((String) ln);
-            bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void writeLine(String line) {
+        write(line);
+    }
     @Override
     public void close() {
         try {

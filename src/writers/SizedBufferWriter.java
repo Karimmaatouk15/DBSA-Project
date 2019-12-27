@@ -28,12 +28,19 @@ public class SizedBufferWriter implements OutputStreamInterface {
     }
 
     @Override
-    public void writeln(Object ln) {
+    public void write(Object ln) {
         if (buffer.size() == queueLength) {
             writeBuffer();
         }
 
         buffer.offer((int) ln);
+    }
+
+    @Override
+    public void writeLine(String line) {
+        for (char ch : line.toCharArray()) {
+            write((int) (ch));
+        }
     }
 
     private void writeBuffer() {//writes Int

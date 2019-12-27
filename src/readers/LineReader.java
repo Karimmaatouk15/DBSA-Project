@@ -22,15 +22,20 @@ public class LineReader implements InputStreamInterface {
     }
 
     @Override
-    public Object readln() {
+    public Object read() {
         if (!endOfStream()) {
             try {
-                return bufferedReader.readLine();
+                return bufferedReader.readLine() + (char)LINE_FEED_BYTE;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         return -1;
+    }
+
+    @Override
+    public String readLine() {
+        return (String) read();
     }
 
     @Override
@@ -46,7 +51,7 @@ public class LineReader implements InputStreamInterface {
     public boolean endOfStream() {
 
         try {
-          return  !bufferedReader.ready();  // End of Stream is determined by !BufferReader.Ready()
+            return !bufferedReader.ready();  // End of Stream is determined by !BufferReader.Ready()
         } catch (IOException e) {
             e.printStackTrace();
         }

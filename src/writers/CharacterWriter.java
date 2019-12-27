@@ -20,11 +20,18 @@ public class CharacterWriter implements OutputStreamInterface {
     }
 
     @Override
-    public void writeln(Object ln) {
+    public void write(Object ln) {
         try {
             writer.write((int) ln);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void writeLine(String line) {
+        for (char ch : line.toCharArray()) {
+            write((int) (ch));
         }
     }
 

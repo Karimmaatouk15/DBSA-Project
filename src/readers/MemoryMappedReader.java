@@ -32,7 +32,7 @@ public class MemoryMappedReader implements InputStreamInterface {
     }
 
     @Override
-    public Object readln() {
+    public Object read() {
         if (!mappedBuffer.hasRemaining()) {
             mapFile();
         }
@@ -40,7 +40,17 @@ public class MemoryMappedReader implements InputStreamInterface {
             return -1;
         }
         return mappedBuffer.get(); //returns byte
+    }
 
+    @Override
+    public String readLine() {
+        String line = "";
+        int r ;
+        do {
+            r = (byte) read();
+            line += (char) r;
+        } while (r != LINE_FEED_BYTE);
+        return line;
     }
 
     @Override
