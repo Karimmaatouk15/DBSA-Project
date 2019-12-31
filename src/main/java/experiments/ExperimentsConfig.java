@@ -23,7 +23,7 @@ public class ExperimentsConfig {
 
     @State(Scope.Thread)
     public static class J {
-        @Param({"4096", "1048576"})
+        @Param({"10", "50", "100"})
         int j;
     }
 

@@ -6,7 +6,7 @@
 
     <groupId>123456</groupId>
     <artifactId>DBSA-Project</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <jmh.version>1.21</jmh.version>
@@ -39,7 +39,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>Benchmark</mainClass>
+                            <mainClass>benchmark.Benchmark</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

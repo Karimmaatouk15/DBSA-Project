@@ -3,7 +3,6 @@ package benchmark;
 
 import experiments.Length;
 
-import experiments.RRmerge;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
