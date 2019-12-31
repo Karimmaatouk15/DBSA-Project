@@ -43,7 +43,7 @@ public class MemoryMappedWriter implements OutputStreamInterface {
                 mappedBuffer = channel.map(FileChannel.MapMode.READ_WRITE, bufferOffset * bufferSize, bufferSize);
                 bufferOffset += 1;
             }
-            mappedBuffer.put((byte) ln);
+            mappedBuffer.put((Byte) ln);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,6 +63,10 @@ public class MemoryMappedWriter implements OutputStreamInterface {
             mappedBuffer.clear();
             channel.close();
             writer.close();
+            mappedBuffer = null;
+            writer= null;
+            channel = null;
+            bufferOffset = 0;
         } catch (IOException e) {
             e.printStackTrace();
         }

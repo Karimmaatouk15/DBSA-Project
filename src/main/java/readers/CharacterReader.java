@@ -1,6 +1,7 @@
 package readers;
 
 import interfaces.InputStreamInterface;
+import writers.CharacterWriter;
 
 import java.io.*;
 
@@ -27,7 +28,7 @@ public class CharacterReader implements InputStreamInterface {
                 e.printStackTrace();
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class CharacterReader implements InputStreamInterface {
         String line = "";
         int r;
         do {
-            r = (int) read();
+            r = (Integer) read();
             line += (char) r;
         } while (r != LINE_FEED_BYTE);
         return line;
@@ -73,5 +74,15 @@ public class CharacterReader implements InputStreamInterface {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public long fileLength() {
+        try {
+            return reader.length();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

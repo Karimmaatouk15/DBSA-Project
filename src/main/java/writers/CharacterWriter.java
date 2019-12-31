@@ -22,7 +22,7 @@ public class CharacterWriter implements OutputStreamInterface {
     @Override
     public void write(Object ln) {
         try {
-            writer.write((int) ln);
+            writer.write((Integer) ln);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -45,9 +45,9 @@ public class MemoryMappedReader implements InputStreamInterface {
     @Override
     public String readLine() {
         String line = "";
-        int r ;
+        int r;
         do {
-            r = (byte) read();
+            r = (Byte) read();
             line += (char) r;
         } while (r != LINE_FEED_BYTE);
         return line;
@@ -75,6 +75,9 @@ public class MemoryMappedReader implements InputStreamInterface {
             channel.close();
             mappedBuffer.clear();
             reader.close();
+            mappedBuffer = null;
+            reader = null;
+            channel = null;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,5 +93,15 @@ public class MemoryMappedReader implements InputStreamInterface {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public long fileLength() {
+        try {
+            return reader.length();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
