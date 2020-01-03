@@ -25,7 +25,7 @@ public class LineReader implements InputStreamInterface {
     public Object read() {
         if (!endOfStream()) {
             try {
-                return bufferedReader.readLine() + (char)CR_BYTE +(char)LINE_FEED_BYTE ;
+                return bufferedReader.readLine()+ (char)LINE_FEED_BYTE ;
             } catch (IOException e) {
                 e.printStackTrace();
             }

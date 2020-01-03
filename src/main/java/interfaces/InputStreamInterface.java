@@ -6,19 +6,19 @@ import org.openjdk.jmh.annotations.State;
 import java.io.IOException;
 
 public interface InputStreamInterface {
-    byte LINE_FEED_BYTE=10 ;
-    byte CR_BYTE=13;
+    byte LINE_FEED_BYTE = 10;
+    byte CR_BYTE = 13;
     int EOF_INT = -1;
 
-    void open(String filePath) ;
+    void open(String filePath);
 
-    Object read() ;
+    Object read();
 
     String readLine();
 
-    void seek(long pos) ;
+    void seek(long pos);
 
-    boolean endOfStream()  ;
+    boolean endOfStream();
 
     long fileLength();
 
