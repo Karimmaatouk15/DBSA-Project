@@ -2,19 +2,16 @@ package experiments;
 
 import interfaces.InputStreamInterface;
 import interfaces.OutputStreamInterface;
+import org.openjdk.jmh.annotations.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class ExtSort {
     public static final String SORTED_FILES_DESTINATION = "C:/Users/karim/Desktop/SortedStreams/";
 
 
-    public static void main(String[] args) {
-        extSort(ExperimentsConfig.IMDB_DIR + "aka_title.csv", 0, 5000, 50, 4096, StreamType.LINE, StreamType.LINE);
-
-    }
-
-    public static void extSort(String filePathToRead, final int k, int m, int d, int B, StreamType readerType, StreamType writerType) {
+    public static void extSort(String filePathToRead, final int k, int m, int d, int B, StreamType readerType, StreamType writerType, String fileName) {
         ArrayList<String> buffer;
         Queue<String> sortedFilesQueue = new ArrayDeque<String>();
         buffer = new ArrayList<>();
@@ -28,7 +25,7 @@ public class ExtSort {
             public int compare(String s, String t1) {
                 List<String> a1 = Arrays.asList(s.split("\\s*,\\s*"));
                 List<String> a2 = Arrays.asList(t1.split("\\s*,\\s*"));
-                return (Integer.valueOf(a1.get(k))).compareTo(Integer.valueOf(a2.get(k)));
+                return (a1.get(k)).compareTo(a2.get(k));
             }
         };
 
@@ -46,7 +43,7 @@ public class ExtSort {
             //Sort the buffer
             buffer.sort(comparator);
             //create new file i;
-            String fileLoc = SORTED_FILES_DESTINATION + i;
+            String fileLoc = SORTED_FILES_DESTINATION + i + ".txt";
             writer.create(fileLoc);
             //write to file
             for (String line : buffer) {
@@ -61,11 +58,11 @@ public class ExtSort {
             i++;
             writer.close();
         }
-        merge(sortedFilesQueue, d, B, k, readerType, writerType);
+        merge(sortedFilesQueue, d, B, k, readerType, writerType, fileName);
     }
 
 
-    public static void merge(Queue<String> sortedFilesQueue, int d, int B, int k, StreamType readerType, StreamType writerType) {
+    public static void merge(Queue<String> sortedFilesQueue, int d, int B, int k, StreamType readerType, StreamType writerType, String fileName) {
         OutputStreamInterface writer = ReadersWritersFactory.getNewWriterInstance(writerType, B);
         // Priority Queue Comparator
         Comparator<String> comparator = new Comparator<String>() {
@@ -73,7 +70,7 @@ public class ExtSort {
             public int compare(String s, String t1) {
                 List<String> a1 = Arrays.asList(s.split("\\s*,\\s*"));
                 List<String> a2 = Arrays.asList(t1.split("\\s*,\\s*"));
-                return (Integer.valueOf(a1.get(k))).compareTo(Integer.valueOf(a2.get(k)));
+                return (a1.get(k)).compareTo(a2.get(k));
             }
         };
         PriorityQueue<String> pQueue = new PriorityQueue<>(comparator);
@@ -81,7 +78,7 @@ public class ExtSort {
         int batchCount = 0;
         ArrayList<InputStreamInterface> readers = new ArrayList<>();
         while (sortedFilesQueue.size() > d) {
-            String writerLoc = SORTED_FILES_DESTINATION + "merge_" + batchCount;
+            String writerLoc = SORTED_FILES_DESTINATION + "merge_" + batchCount + ".txt";
             writer.create(writerLoc);
             sortedFilesQueue.offer(writerLoc);
             for (int i = 0; i < d; i++) {  // Take first d files and merge them
@@ -128,7 +125,7 @@ public class ExtSort {
             reader.open(sortedFilesQueue.poll());
             readers.add(reader);
         }
-        writer.create(SORTED_FILES_DESTINATION + "MERGED_FILE");
+        writer.create(SORTED_FILES_DESTINATION + "SORTED_FILE_" + fileName.replaceAll(".csv", "") + ".txt");
 
          /*
             Read first input from each file
@@ -162,12 +159,14 @@ public class ExtSort {
         inputsReference.clear();
     }
 
-    public static boolean allFilesEndOfStream(ArrayList<InputStreamInterface> inputStreams) {
-        boolean endOfStream = true;
-        for (int i = 0; i < inputStreams.size(); i++) {
-            endOfStream = endOfStream & inputStreams.get(i).endOfStream();
-        }
-        return endOfStream;
+    @Benchmark
+    @Warmup(iterations = 1)
+    @Fork(value = 1)
+    @BenchmarkMode(Mode.AverageTime)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    public static void LineReaderAndLineWriterSort(ExperimentsConfig.FileName name, ExperimentsConfig.K column,
+                                                   ExperimentsConfig.M M, ExperimentsConfig.D D) {
+        extSort(ExperimentsConfig.IMDB_DIR + name.name, column.k, M.M, D.d, 0, StreamType.LINE, StreamType.LINE, name.name);
     }
 }
 

@@ -39,7 +39,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>benchmark.Benchmark</mainClass>
+                            <mainClass>benchmark.BenchmarkMergeSort</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

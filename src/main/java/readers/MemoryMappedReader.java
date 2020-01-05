@@ -45,10 +45,15 @@ public class MemoryMappedReader implements InputStreamInterface {
     @Override
     public String readLine() {
         String line = "";
-        int r;
+        int r = 0;
         do {
-            r = (Byte) read();
-            line += (char) r;
+            Object b = read();
+            if (b instanceof Byte) {
+                r = (Byte) b;
+                line += (char) r;
+            } else if (b instanceof Integer && ((int) b) == -1) {
+                break;
+            }
         } while (r != LINE_FEED_BYTE);
         return line;
     }

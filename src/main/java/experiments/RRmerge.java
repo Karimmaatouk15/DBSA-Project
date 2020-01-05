@@ -10,36 +10,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RRmerge {
-//    public static void main(String[] args) {
-//        String f = "keyword.csv";
-//        String path = "C:/Users/karim/Desktop/imdb/";
-//        // Vary B
-//        int B = 2097152;
-//        ArrayList<InputStreamInterface> inputStreams = new ArrayList<>();
-//        ArrayList<OutputStreamInterface> outputStreams = new ArrayList<>();
-//        ArrayList<String> fileNames = new ArrayList<>();
-//        inputStreams.add(new LineReader());
-//        inputStreams.add(new MemoryMappedReader(B));
-//        outputStreams.add(new CharacterWriter());
-//        outputStreams.add(new LineWriter());
-//        outputStreams.add(new SizedBufferWriter(B));
-//        outputStreams.add(new MemoryMappedWriter(B));
-//        fileNames.add("aka_name.csv");
-//        fileNames.add("aka_title.csv");
-//        fileNames.add("info_type.csv");
-//        for (int k = 0; k < fileNames.size(); k++) {
-//            fileNames.set(k, path + fileNames.get(k));
-//        }
-//
-//
-//        ReadingXWriting(fileNames, StreamType.LINE, StreamType.LINE, B);
-//        ReadingXWriting(fileNames, experiments.StreamType.LINE, experiments.StreamType.SIZED_BUFFER, B);
-//        ReadingXWriting(fileNames, StreamType.LINE, StreamType.MEMORY_MAPPED, B);
-//        ReadingXWriting(fileNames, experiments.StreamType.MEMORY_MAPPED, experiments.StreamType.CHARACTER, B);
-//        ReadingXWriting(fileNames, StreamType.MEMORY_MAPPED, StreamType.LINE, B);
-//        ReadingXWriting(fileNames, experiments.StreamType.MEMORY_MAPPED, experiments.StreamType.SIZED_BUFFER, B);
-//        ReadingXWriting(fileNames, StreamType.MEMORY_MAPPED, StreamType.MEMORY_MAPPED, B);
-//    }
 
     public static void ReadingXWriting(List<String> filePathes, StreamType readType, StreamType writeType, int B) {
         ArrayList<InputStreamInterface> readers = new ArrayList<>();
@@ -51,7 +21,6 @@ public class RRmerge {
             reader.open(filePath);
             readers.add(reader);
         }
-//        long start = System.currentTimeMillis();
         while (!allFilesEndOfStream(readers)) {
             for (int i = 0; i < readers.size(); i++) {
                 if (!readers.get(i).endOfStream()) {
@@ -65,8 +34,6 @@ public class RRmerge {
             readers.remove(i);
         }
         writer.close();
-//        long end = System.currentTimeMillis();
-//        System.out.println("Reader " + (readType.ordinal() + 1) + "/Writer " + (writeType.ordinal() + 1) + " :" + (end - start));
     }
 
 
